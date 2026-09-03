@@ -1,0 +1,33 @@
+[package]
+name = "geo-kit"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+description = "Typed newtypes for validated geo primitives — postcodes, country codes, coordinates, addresses"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/WyattAu/geo-kit"
+keywords = ["geo", "address", "postcode", "coordinates"]
+categories = ["rust-patterns"]
+exclude = ["/target"]
+
+[dependencies]
+thiserror = { version = "2", default-features = false }
+serde = { version = "1", features = ["derive"], optional = true }
+serde_json = { version = "1", optional = true }
+regex = { version = "1", optional = true }
+
+[dev-dependencies]
+proptest = "1"
+serde_json = "1"
+criterion = { version = "0.5", features = ["html_reports"] }
+regex = "1"
+
+[features]
+default = ["std"]
+std = ["thiserror/std", "serde?/std"]
+serde = ["dep:serde", "dep:serde_json"]
+regex = ["dep:regex"]
+
+[[bench]]
+name = "geo_bench"
+harness = false
