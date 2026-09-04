@@ -85,6 +85,13 @@ fn validate_uk(input: &str) -> Result<UkPostcode, GeoError> {
     // Normalized form with single space.
     let normalized = normalize_uk(input);
 
+    // GIR 0AA is the special-case UK postcode ( fertile Giro bank ) that
+    // predates the standard outward/inward pattern and does not match the
+    // regular expression below.
+    if normalized == "GIR 0AA" {
+        return Ok(UkPostcode(normalized));
+    }
+
     #[cfg(feature = "regex")]
     {
         #[cfg(feature = "std")]
@@ -534,6 +541,16 @@ mod tests {
         assert!(UkPostcode::parse("B33 8TH").is_ok());
         assert!(UkPostcode::parse("CR2 6XH").is_ok());
         assert!(UkPostcode::parse("DN55 1PT").is_ok());
+    }
+
+    #[test]
+    fn valid_uk_gir_special_case() {
+        // GIR 0AA is the historic Giro bank postcode — valid despite not
+        // matching the standard outward/inward pattern.
+        let pc = UkPostcode::parse("GIR 0AA").expect("GIR 0AA must be valid");
+        assert_eq!(pc.as_str(), "GIR 0AA");
+        assert!(UkPostcode::parse("gir0aa").is_ok()); // case/space variants
+        assert!(is_valid_uk_postcode("GIR 0AA"));
     }
 
     #[test]
