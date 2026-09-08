@@ -22,23 +22,11 @@ where
 #[test]
 fn uk_valid_cases() {
     let valid = [
-        "SW1A 1AA",
-        "SW1A1AA",
-        "sw1a 1aa",
-        "EC1A 1BB",
-        "M1 1AE",
-        "B33 8TH",
-        "CR2 6XH",
-        "DN55 1PT",
-        "W1A 0AX",
-        "NW1 6XE",
+        "SW1A 1AA", "SW1A1AA", "sw1a 1aa", "EC1A 1BB", "M1 1AE", "B33 8TH", "CR2 6XH", "DN55 1PT",
+        "W1A 0AX", "NW1 6XE",
     ];
     for case in valid {
-        assert!(
-            UkPostcode::parse(case).is_ok(),
-            "should be valid: {}",
-            case
-        );
+        assert!(UkPostcode::parse(case).is_ok(), "should be valid: {}", case);
         // After normalization, should be valid again.
         let normalized = UkPostcode::parse(case).unwrap().to_string();
         assert!(
@@ -118,7 +106,11 @@ fn us_valid_cases() {
     let valid = ["90210", "00501", "12345-6789", "99999-9999", "00000"];
     for case in valid {
         assert!(UsZipCode::parse(case).is_ok(), "should be valid: {}", case);
-        assert!(roundtrip(case, UsZipCode::parse), "roundtrip failed: {}", case);
+        assert!(
+            roundtrip(case, UsZipCode::parse),
+            "roundtrip failed: {}",
+            case
+        );
     }
 }
 
@@ -174,14 +166,25 @@ fn postcode_generic() {
 fn country_valid() {
     let valid = ["GB", "US", "DE", "FR", "JP", "CN", "BR", "ZZ"];
     for case in valid {
-        assert!(CountryCode::parse(case).is_ok(), "should be valid: {}", case);
-        assert!(roundtrip(case, CountryCode::parse), "roundtrip failed: {}", case);
+        assert!(
+            CountryCode::parse(case).is_ok(),
+            "should be valid: {}",
+            case
+        );
+        assert!(
+            roundtrip(case, CountryCode::parse),
+            "roundtrip failed: {}",
+            case
+        );
     }
 }
 
 #[test]
 fn country_name_mapping() {
-    assert_eq!(CountryCode::parse("GB").unwrap().country_name(), "United Kingdom");
+    assert_eq!(
+        CountryCode::parse("GB").unwrap().country_name(),
+        "United Kingdom"
+    );
     assert_eq!(
         CountryCode::parse("US").unwrap().country_name(),
         "United States of America"
@@ -223,7 +226,12 @@ fn coords_valid() {
         (-33.8688, 151.2093),
     ];
     for (lat, lon) in valid {
-        assert!(Coords::new(lat, lon).is_ok(), "should be valid: {},{}", lat, lon);
+        assert!(
+            Coords::new(lat, lon).is_ok(),
+            "should be valid: {},{}",
+            lat,
+            lon
+        );
     }
 }
 

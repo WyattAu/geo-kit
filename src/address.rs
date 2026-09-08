@@ -96,9 +96,13 @@ impl Address {
         validate_address_fields(&line1, &line2, &city, &county)?;
         Ok(Address {
             line1: line1.trim().to_string(),
-            line2: line2.map(|s| s.trim().to_string()).filter(|s| !s.is_empty()),
+            line2: line2
+                .map(|s| s.trim().to_string())
+                .filter(|s| !s.is_empty()),
             city: city.trim().to_string(),
-            county: county.map(|s| s.trim().to_string()).filter(|s| !s.is_empty()),
+            county: county
+                .map(|s| s.trim().to_string())
+                .filter(|s| !s.is_empty()),
             postcode,
             country,
             coords,
@@ -259,19 +263,27 @@ impl AddressBuilder {
     ///
     /// Returns [`GeoError::InvalidAddress`] if required fields are missing or invalid.
     pub fn build(self) -> Result<Address, GeoError> {
-        let line1 = self.line1.ok_or_else(|| {
-            GeoError::InvalidAddress("line1 is required".to_string())
-        })?;
-        let city = self.city.ok_or_else(|| {
-            GeoError::InvalidAddress("city is required".to_string())
-        })?;
-        let postcode = self.postcode.ok_or_else(|| {
-            GeoError::InvalidAddress("postcode is required".to_string())
-        })?;
-        let country = self.country.ok_or_else(|| {
-            GeoError::InvalidAddress("country is required".to_string())
-        })?;
-        Address::new_with_coords(line1, self.line2, city, self.county, postcode, country, self.coords)
+        let line1 = self
+            .line1
+            .ok_or_else(|| GeoError::InvalidAddress("line1 is required".to_string()))?;
+        let city = self
+            .city
+            .ok_or_else(|| GeoError::InvalidAddress("city is required".to_string()))?;
+        let postcode = self
+            .postcode
+            .ok_or_else(|| GeoError::InvalidAddress("postcode is required".to_string()))?;
+        let country = self
+            .country
+            .ok_or_else(|| GeoError::InvalidAddress("country is required".to_string()))?;
+        Address::new_with_coords(
+            line1,
+            self.line2,
+            city,
+            self.county,
+            postcode,
+            country,
+            self.coords,
+        )
     }
 }
 
@@ -390,7 +402,10 @@ mod tests {
 
     #[test]
     fn builder_missing_field() {
-        let res = AddressBuilder::new().line1("10 Downing St").city("London").build();
+        let res = AddressBuilder::new()
+            .line1("10 Downing St")
+            .city("London")
+            .build();
         assert!(res.is_err());
     }
 }

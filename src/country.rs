@@ -315,7 +315,9 @@ impl CountryCode {
 
 fn validate_country(input: &str) -> Result<CountryCode, GeoError> {
     if input.is_empty() {
-        return Err(GeoError::InvalidCountry("country code is empty".to_string()));
+        return Err(GeoError::InvalidCountry(
+            "country code is empty".to_string(),
+        ));
     }
     if input.contains('\r') || input.contains('\n') || input.contains(' ') || input.contains('\t') {
         return Err(GeoError::InvalidCountry(
@@ -335,13 +337,19 @@ fn validate_country(input: &str) -> Result<CountryCode, GeoError> {
                     let init = match regex::Regex::new(r"^[A-Z]{2}$") {
                         Ok(r) => r,
                         Err(_) => {
-                            return Err(GeoError::InvalidCountry("internal regex error".to_string()))
+                            return Err(GeoError::InvalidCountry(
+                                "internal regex error".to_string(),
+                            ))
                         }
                     };
                     let _ = RE.set(init);
                     match RE.get() {
                         Some(r) => r,
-                        None => return Err(GeoError::InvalidCountry("internal regex error".to_string())),
+                        None => {
+                            return Err(GeoError::InvalidCountry(
+                                "internal regex error".to_string(),
+                            ))
+                        }
                     }
                 }
             };
@@ -441,9 +449,15 @@ mod tests {
     #[test]
     fn valid_codes() {
         assert!(CountryCode::parse("GB").is_ok());
-        assert_eq!(CountryCode::parse("GB").unwrap().country_name(), "United Kingdom");
+        assert_eq!(
+            CountryCode::parse("GB").unwrap().country_name(),
+            "United Kingdom"
+        );
         assert!(CountryCode::parse("US").is_ok());
-        assert_eq!(CountryCode::parse("US").unwrap().country_name(), "United States of America");
+        assert_eq!(
+            CountryCode::parse("US").unwrap().country_name(),
+            "United States of America"
+        );
         assert!(CountryCode::parse("DE").is_ok());
         assert_eq!(CountryCode::parse("FR").unwrap().country_name(), "France");
         assert!(CountryCode::parse("JP").is_ok());

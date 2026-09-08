@@ -7,7 +7,7 @@ Typed newtypes for validated geo primitives — postcodes, country codes, coordi
 
 ## Purpose
 
-`geo-kit` is an L0 leaf crate providing validated newtypes for UK postcodes, US ZIP codes, ISO 3166-1 alpha-2 country codes, geographic coordinates, and postal addresses. Each type guarantees its invariants at construction time.
+`geo-kit` is an L0 leaf crate providing validated newtypes for UK postcodes, US ZIP codes, Canadian postcodes, German Postleitzahlen, French codes postaux, Japanese postal codes, Australian postcodes, Indian PIN codes, ISO 3166-1 alpha-2 country codes, geographic coordinates, and postal addresses. Each type guarantees its invariants at construction time.
 
 ## Types
 
@@ -15,7 +15,13 @@ Typed newtypes for validated geo primitives — postcodes, country codes, coordi
 |------|-----------|
 | `UkPostcode` | UK postcode `^[A-Z]{1,2}[0-9][A-Z0-9]? [0-9][A-Z]{2}$`, space optional, uppercase normalized |
 | `UsZipCode` | US ZIP `^\d{5}(-\d{4})?$` |
-| `Postcode` | Generic `Uk | Us` enum |
+| `CaPostcode` | Canada `^[A-Z][0-9][A-Z] [0-9][A-Z][0-9]$`, space optional, uppercase normalized |
+| `DePlz` | Germany `^\d{5}$` |
+| `FrCp` | France `^\d{5}$` |
+| `JpPostal` | Japan `^\d{3}-\d{4}$`, hyphen optional, normalized |
+| `AuPostcode` | Australia `^\d{4}$` |
+| `InPin` | India `^[1-9]\d{5}$` |
+| `Postcode` | Generic enum across all supported countries |
 | `CountryCode` | ISO 3166-1 alpha-2 `^[A-Z]{2}$`, with `country_name()` mapping |
 | `Coords` | `lat` `-90..=90`, `lon` `-180..=180`, finite |
 | `Address` | `line1`/`city` non-empty, `postcode`/`country` valid, optional `coords` |

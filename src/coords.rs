@@ -41,7 +41,9 @@ impl Coords {
     pub fn parse(s: &str) -> Result<Self, GeoError> {
         let trimmed = s.trim();
         if trimmed.is_empty() {
-            return Err(GeoError::InvalidCoords("coords string is empty".to_string()));
+            return Err(GeoError::InvalidCoords(
+                "coords string is empty".to_string(),
+            ));
         }
         // Support ',' or whitespace separated, but prefer comma.
         let (lat_str, lon_str) = if let Some(idx) = trimmed.find(',') {

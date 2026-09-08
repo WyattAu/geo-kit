@@ -11,7 +11,13 @@
 //! |------|-----------|
 //! | [`UkPostcode`] | UK postcode `^[A-Z]{1,2}[0-9][A-Z0-9]? [0-9][A-Z]{2}$`, space optional, uppercase normalized |
 //! | [`UsZipCode`] | US ZIP `^\d{5}(-\d{4})?$` |
-//! | [`Postcode`] | Generic postcode (UK or US) |
+//! | [`CaPostcode`] | Canada `^[A-Z][0-9][A-Z] [0-9][A-Z][0-9]$`, space optional, uppercase normalized |
+//! | [`DePlz`] | Germany `^\d{5}$` |
+//! | [`FrCp`] | France `^\d{5}$` |
+//! | [`JpPostal`] | Japan `^\d{3}-\d{4}$`, hyphen optional, normalized |
+//! | [`AuPostcode`] | Australia `^\d{4}$` |
+//! | [`InPin`] | India `^[1-9]\d{5}$` |
+//! | [`Postcode`] | Generic postcode (any supported country) |
 //! | [`CountryCode`] | ISO 3166-1 alpha-2 `^[A-Z]{2}$`, with `country_name()` mapping |
 //! | [`Coords`] | Latitude `-90..=90`, longitude `-180..=180`, finite |
 //! | [`Address`] | Validated address with non-empty lines, postcode, country, optional coords |
@@ -54,10 +60,14 @@ pub mod postcode;
 
 // Re-exports
 pub use address::{Address, AddressBuilder, PostcodeChoice};
-pub use coords::{Coords, is_valid_coords};
-pub use country::{CountryCode, is_valid_country_code};
+pub use coords::{is_valid_coords, Coords};
+pub use country::{is_valid_country_code, CountryCode};
 pub use error::GeoError;
-pub use postcode::{Postcode, UkPostcode, UsZipCode, is_valid_uk_postcode, is_valid_us_zip};
+pub use postcode::{
+    is_valid_au_postcode, is_valid_ca_postcode, is_valid_de_plz, is_valid_fr_cp, is_valid_in_pin,
+    is_valid_jp_postal, is_valid_uk_postcode, is_valid_us_zip, AuPostcode, CaPostcode, DePlz, FrCp,
+    InPin, JpPostal, Postcode, UkPostcode, UsZipCode,
+};
 
 #[cfg(test)]
 mod smoke {
@@ -67,6 +77,12 @@ mod smoke {
     fn reexports_work() {
         let _ = UkPostcode::parse("SW1A 1AA").expect("valid");
         let _ = UsZipCode::parse("90210").expect("valid");
+        let _ = CaPostcode::parse("K1A 0B1").expect("valid");
+        let _ = DePlz::parse("10115").expect("valid");
+        let _ = FrCp::parse("75001").expect("valid");
+        let _ = JpPostal::parse("100-0001").expect("valid");
+        let _ = AuPostcode::parse("2000").expect("valid");
+        let _ = InPin::parse("110001").expect("valid");
         let _ = Postcode::parse("SW1A 1AA").expect("valid");
         let _ = CountryCode::parse("GB").expect("valid");
         let _ = Coords::new(51.5, -0.12).expect("valid");
