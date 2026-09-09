@@ -31,3 +31,7 @@ regex = ["dep:regex"]
 [[bench]]
 name = "geo_bench"
 harness = false
+
+[lints.clippy]
+unwrap_used = "warn"
+expect_used = "warn"
