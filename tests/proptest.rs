@@ -1,3 +1,6 @@
+// Tests/benches assert invariants directly; unwraps keep failures loud.
+#![allow(clippy::unwrap_used, clippy::expect_used)]
+
 use geo_kit::{
     AuPostcode, CaPostcode, Coords, CountryCode, DePlz, FrCp, InPin, JpPostal, Postcode,
     UkPostcode, UsZipCode,

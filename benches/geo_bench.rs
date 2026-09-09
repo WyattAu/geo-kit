@@ -1,3 +1,6 @@
+// Tests/benches assert invariants directly; unwraps keep failures loud.
+#![allow(clippy::unwrap_used, clippy::expect_used)]
+
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use geo_kit::{Coords, CountryCode, UkPostcode, UsZipCode};
 

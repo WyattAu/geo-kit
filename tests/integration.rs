@@ -1,3 +1,6 @@
+// Tests/benches assert invariants directly; unwraps keep failures loud.
+#![allow(clippy::unwrap_used, clippy::expect_used)]
+
 use geo_kit::{Address, AddressBuilder, Coords, CountryCode, Postcode, UkPostcode, UsZipCode};
 use std::str::FromStr;
 
