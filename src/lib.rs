@@ -73,6 +73,8 @@ pub use postcode::{
 #[cfg(test)]
 mod smoke {
     use super::*;
+    #[cfg(not(feature = "std"))]
+    use alloc::string::ToString;
 
     #[test]
     fn reexports_work() {
