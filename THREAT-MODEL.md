@@ -1,4 +1,4 @@
-# Threat Model — geo-kit
+# Threat Model: geo-kit
 
 Reference: STRIDE. Scope: the crate's public API surface (typed newtypes
 `UkPostcode`, `UsZipCode`, `Coords`, `Address`, `CountryCode`, and the
@@ -6,7 +6,7 @@ Reference: STRIDE. Scope: the crate's public API surface (typed newtypes
 `FromStr` / `TryFrom<String>`, (2) floats entering `Coords::new`, (3) the
 dependency tree (regex-lite, serde).
 
-This crate is an input-validation library — validation **is** its security
+This crate is an input-validation library: validation **is** its security
 surface. It holds no secrets, performs no I/O, and exposes no network or
 filesystem API.
 
@@ -25,11 +25,11 @@ filesystem API.
 | T2 | Out-of-range coordinates accepted (NaN/∞/off-globe) | Tampering | `Coords::new`, `is_valid_coords` | Requires finite lat ∈ [-90, 90], lon ∈ [-180, 180]; `is_valid_coords` mirrors the same logic for callers avoiding newtypes | `coords_rejects_out_of_range_lat`, `coords_rejects_out_of_range_lon`, `coords_valid_range`, `parse_invalid`, `parse_comma` (`src/coords.rs`) |
 | T3 | Country/region confusion (lowercase, wrong length) | Spoofing | `CountryCode::parse`, all postcodes | Strict patterns: ISO alpha-2 uppercase-only (lowercase rejected, not normalized), country-specific postcode regexes with normalization only where documented (UK/CA uppercase, JP hyphen) | `country_rejects_lowercase`, `country_rejects_too_long`, `us_rejects_alpha`, `us_rejects_invalid_len`, `invalid_uk`, `invalid_de` |
 | T4 | Partially validated `Address` (empty lines, mismatched postcode/country) | Tampering | `Address::new`, `AddressBuilder` | Constructor validates non-empty lines and requires an already-validated postcode + country pair; builder rejects empty city/line1 | `invalid_empty_line1`, `invalid_empty_city`, `invalid_line2_empty`, `reexports_work` (valid path) |
-| T5 | Deserialization bypass of validation (serde) | Elevation | serde transparent (de)serialization | Serde impls go **through** the same parse path (transparent), so a forged JSON string cannot produce an invalid instance — deserialization fails with `GeoError` | `display_parse_idempotent`, roundtrip properties `uk_roundtrip` … `us_roundtrip` (`tests/proptest.rs`) |
+| T5 | Deserialization bypass of validation (serde) | Elevation | serde transparent (de)serialization | Serde impls go **through** the same parse path (transparent), so a forged JSON string cannot produce an invalid instance: deserialization fails with `GeoError` | `display_parse_idempotent`, roundtrip properties `uk_roundtrip` … `us_roundtrip` (`tests/proptest.rs`) |
 
 ## Repudiation
 
-Not applicable — the crate is stateless and keeps no records.
+Not applicable: the crate is stateless and keeps no records.
 
 ## Out of Scope
 
@@ -41,7 +41,7 @@ Not applicable — the crate is stateless and keeps no records.
   syntactically-valid-but-nonexistent codes and reject a few exotic real
   ones (overseas territories etc.); that is a correctness trade, not a
   security control.
-- Caller-side logging of `Address` values (PII) — `Display` renders the
+- Caller-side logging of `Address` values (PII): `Display` renders the
   full address by design.
 
 ## Residual Risks

@@ -1,7 +1,7 @@
 # Changelog
 
 All notable changes to this project are documented here. Format: [Keep a
-Changelog](https://keepachangelog.com/) — versions follow [semver](https://semver.org).
+Changelog](https://keepachangelog.com/): versions follow [semver](https://semver.org).
 
 ## [Unreleased]
 
@@ -9,7 +9,7 @@ Changelog](https://keepachangelog.com/) — versions follow [semver](https://sem
 
 ### Added
 
-- config-knob behavior matrix: tests/config_matrix.rs covers every AddressBuilder knob — each required knob (line1, city, postcode, country) fails the build when omitted (error names the knob) and is observable when set; each optional knob (line2, county, coords) defaults to None and becomes Some when set; optional knobs reject whitespace-only values; required values are trimmed.
+- config-knob behavior matrix: tests/config_matrix.rs covers every AddressBuilder knob: each required knob (line1, city, postcode, country) fails the build when omitted (error names the knob) and is observable when set; each optional knob (line2, county, coords) defaults to None and becomes Some when set; optional knobs reject whitespace-only values; required values are trimmed.
 
 
 ## [1.1.0] - 2026-09-09

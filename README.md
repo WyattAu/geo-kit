@@ -1,6 +1,6 @@
 # geo-kit
 
-Typed newtypes for validated geo primitives — postcodes, country codes, coordinates, addresses.
+Typed newtypes for validated geo primitives: postcodes, country codes, coordinates, addresses.
 
 [![Crates.io](https://img.shields.io/crates/v/geo-kit.svg)](https://crates.io/crates/geo-kit)
 [![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg)](./LICENSE-MIT)
@@ -28,10 +28,10 @@ Typed newtypes for validated geo primitives — postcodes, country codes, coordi
 
 ## Features
 
-- `std` (default) — enables `std` support
-- `serde` — `Serialize`/`Deserialize` transparent for newtypes, derived for `Coords`/`Address`
-- `regex` — regex-backed validation (more precise where applicable)
-- `no_std` — `no_std` compatible (`extern crate alloc`)
+- `std` (default): enables `std` support
+- `serde`: `Serialize`/`Deserialize` transparent for newtypes, derived for `Coords`/`Address`
+- `regex`: regex-backed validation (more precise where applicable)
+- `no_std`: `no_std` compatible (`extern crate alloc`)
 
 No `unsafe` code (`#![forbid(unsafe_code)]`), `#![deny(missing_docs)]`.
 

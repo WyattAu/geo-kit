@@ -1,9 +1,9 @@
-# Requirements — geo-kit
+# Requirements: geo-kit
 
 Numbered, testable requirements. Every requirement maps to at least one named
 test or doc-comment contract; security-relevant items cite THREAT-MODEL.md rows.
 
-Scope: Geospatial primitives — haversine distance, bounding boxes, postcode parsing/validation
+Scope: Geospatial primitives: haversine distance, bounding boxes, postcode parsing/validation
 
 ## Functional
 
